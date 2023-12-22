@@ -14,10 +14,10 @@ buttonAdicionar.addEventListener("submit", function (e) {
   Adicionar();
   e.preventDefault();
 });
-buttonAtualizar.addEventListener("click", function (e) {
+buttonAtualizar.addEventListener("click", function () {
   Update();
-  e.preventDefault();
   fetchListar();
+  location.reload();
 });
 
 function Adicionar() {
@@ -37,7 +37,6 @@ function Adicionar() {
   })
     .then((res) => res.json())
     .then((data) => {
-      //retorno json:
       console.log(data);
     });
 }
@@ -48,7 +47,6 @@ function deletar(id) {
     fetch(`https://profrodolfo.com.br/api/delete/${id}`)
       .then((res) => res.json())
       .then(() => window.alert("Excluido com Sucesso"));
-    location.reload();
   } else {
     return false;
   }
@@ -72,31 +70,29 @@ function Update() {
   })
     .then((res) => res.json())
     .then((data) => {
-      //retorno json:
       console.log(data);
     });
 }
 function listar(api, e) {
-  //    console.log(api)
-
   lista.innerHTML += `
         <div class="row">
             <div class="col align-items-center justify-content-center">
-                <div class="card mb-3" style="max-width: 540px; height:200px;style="">
+              <div class="card mb-3 h-75">
                     <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="${api.foto}" class="img-fluid rounded-start" alt="${api.nome}">
-                            </div>
-                            <div class="col-md-8 ">
-                            <div class="card-body">
+                        <div>
+                            <img src="${api.foto}" class="img-fluid" alt="${api.nome}">
+                          </div>
+                            <div>
+                            <div class="card-body col-6 d-flex justify-content-center">
                                 <h5 class="card-title">${api.nome}</h5>
-                                <p class="card-text"><small class="text-body-secondary">${api.valor}</p>
+                                <p class="card-text0"><small class="text-body-secondary">${api.valor}</p>
+                                <div class="buttons">
+                                  <button type="button" onclick="editar(${api.id})" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-dismiss="modal">Editar</button>
+                                  <button type="button" onclick="deletar(${api.id})" class="btn btn-danger">Excluir</button>
+        
+                                </div>
                             </div>
-                            <div class="buttons">
-                            <button type="button" onclick="editar(${api.id})" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-dismiss="modal">Editar</button>
-                            <button type="button" onclick="deletar(${api.id})" class="btn btn-danger">Excluir</button>
-    
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
